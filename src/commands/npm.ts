@@ -2,9 +2,10 @@ import path from 'node:path'
 
 import spawn from '@npmcli/promise-spawn'
 
+import { distPath } from '../constants'
+
 import type { CliSubcommand } from '../utils/meow-with-subcommands'
 
-const distPath = __dirname
 const description = 'npm wrapper functionality'
 
 export const npm: CliSubcommand = {
