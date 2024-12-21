@@ -8,7 +8,7 @@ const { describe, it } = require('node:test')
 const spawn = require('@npmcli/promise-spawn')
 
 const constants = require('../dist/constants.js')
-const { abortSignal, execPath, rootBinPath } = constants
+const { abortSignal, rootBinPath } = constants
 
 const entryPath = path.join(rootBinPath, 'cli.js')
 const testPath = __dirname
@@ -29,7 +29,8 @@ for (const npm of ['npm8', 'npm10']) {
     it('should bail on new typosquat', async () => {
       await assert.rejects(
         () =>
-          spawn(execPath, [entryPath, 'npm', 'install', 'bowserify'], {
+          // Lazily access constants.execPath.
+          spawn(constants.execPath, [entryPath, 'npm', 'install', 'bowserify'], {
             cwd: path.join(npmFixturesPath, 'lacking-typosquat'),
             encoding: 'utf8',
             env: {
